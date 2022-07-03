@@ -19,6 +19,7 @@ def resource_path(relative_path):
 frame = tk.Tk()
 frame.title("smart clipboard")
 frame.geometry('400x250')
+frame.minsize(400,250)
 frame.iconbitmap(resource_path('icon.ico'))
 
 
@@ -39,6 +40,7 @@ def add_string():
     if inp != "":
         global list_strings
         inp = inp.removeprefix('\n')
+        inp = inp.removesuffix('\n')
         list_strings.append(inp)
         print(list_strings)
         list_of_strings_lbl.config(text=list_strings)
