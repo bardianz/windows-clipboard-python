@@ -24,10 +24,14 @@ max = 0
 
 def add_string():
     inp = input_string.get(1.0, "end-1c")
-    global list_strings
-    list_strings.append(inp)
-    list_of_strings_lbl.config(text=list_strings)
-    input_string.delete("1.0","end")
+    if inp != "":
+        global list_strings
+        inp = inp.removeprefix('\n')
+        list_strings.append(inp)
+        print(list_strings)
+        list_of_strings_lbl.config(text=list_strings)
+        input_string.delete("1.0","end")
+        input_string.config(wrap=None)
 
 
     
@@ -93,7 +97,14 @@ add_strings_label.pack(padx=20, pady=10)
 
 
 
-input_string = tk.Text(frame, height=1, width=80)
+input_string = tk.Text(frame, height=1, width=80,wrap=None)
+input_string.bind('<Return>', lambda x: add_string())
+# 
+chxscrollbar=Scrollbar(input_string, orient=HORIZONTAL, command=input_string.xview)
+input_string["xscrollcommand"]=chxscrollbar.set
+
+# 
+
 input_string.pack(padx=20, pady=10)
 
 add_button = tk.Button(frame, text="add",command=add_string  )
