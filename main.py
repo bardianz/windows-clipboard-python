@@ -59,7 +59,7 @@ j =0
 
 
 def on_release(key):
-    print('started')
+    
     
     global running
     global list_strings
@@ -72,11 +72,13 @@ def on_release(key):
 
     if key == keyboard.Key.caps_lock:
             if j<len(list_strings):
+                print("j is " +str( j )+ ", len is " + str(len(list_strings)))
                 pyperclip.copy(list_strings[j])
                 pyautogui.hotkey('ctrl', 'v')
+                j +=1 
             if j<len(list_strings)-1:
                 print(list_strings[j],"copied")
-                j +=1   
+                  
             
             
                 
