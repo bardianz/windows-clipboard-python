@@ -1,4 +1,3 @@
-from cgitb import text
 from tkinter import *
 import tkinter as tk
 from pynput import keyboard
@@ -37,15 +36,18 @@ max = 0
 
 def add_string():
     inp = input_string.get(1.0, "end-1c")
-    if inp != "":
+    if inp != '' and inp !='\n':
+        print(inp + str(type(inp)))
+
         global list_strings
+        print(list_strings)
         inp = inp.removeprefix('\n')
         inp = inp.removesuffix('\n')
         list_strings.append(inp)
-        print(list_strings)
+        
         list_of_strings_lbl.config(text=list_strings)
-        input_string.delete("1.0","end")
-        input_string.config(wrap=None)
+    input_string.delete("1.0","end")
+    input_string.config(wrap=None)
 
 
     
