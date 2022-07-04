@@ -5,6 +5,8 @@ import pyautogui
 import pyperclip
 import sys
 import os
+import base64
+from PIL import Image, ImageTk
 
 
 
@@ -19,7 +21,19 @@ frame = tk.Tk()
 frame.title("smart clipboard")
 frame.geometry('400x250')
 frame.minsize(400,250)
-frame.iconbitmap(resource_path('icon.ico'))
+# icon = resource_path('./assets/icon.ico')
+# # icon = base64.b64decode(icon)
+# # frame.iconbitmap()
+
+# # frame.iconphoto(True, PhotoImage(data=icon))
+
+# # frame.iconbitmap(resource_path('./assets/icon.ico'))
+
+
+# ico = Image.open(icon)
+# photo = ImageTk.PhotoImage(ico)
+# frame.wm_iconphoto(False, photo)
+
 
 
 list_strings=[]
