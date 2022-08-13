@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import ttk
 import tkinter as tk
 from pynput import keyboard
 import pyautogui
@@ -17,22 +18,20 @@ def resource_path(relative_path):
 
 
 
-frame = tk.Tk()
-frame.title("smart clipboard")
-frame.geometry('400x250')
-frame.minsize(400,250)
-# icon = resource_path('./assets/icon.ico')
-# # icon = base64.b64decode(icon)
-# # frame.iconbitmap()
-
-# # frame.iconphoto(True, PhotoImage(data=icon))
-
-# # frame.iconbitmap(resource_path('./assets/icon.ico'))
+root = tk.Tk()
+root.title("smart clipboard")
+root.eval('tk::PlaceWindow . center')
+root.geometry('500x250')
+root.minsize(400,250)
+icon_path = resource_path('./assets/icon.ico')
+root.iconbitmap(default=icon_path)
 
 
-# ico = Image.open(icon)
-# photo = ImageTk.PhotoImage(ico)
-# frame.wm_iconphoto(False, photo)
+
+frame = ttk.Frame(root)
+frame.pack(padx=10, pady=10, fill='x', expand=True)
+
+
 
 
 
@@ -49,7 +48,7 @@ max = 0
 
 
 def add_string():
-    inp = input_string.get(1.0, "end-1c")
+    inp = input_string.get()
     if inp != '' and inp !='\n':
         print(inp + str(type(inp)))
 
@@ -59,17 +58,25 @@ def add_string():
         inp = inp.removesuffix('\n')
         list_strings.append(inp)
         
-        list_of_strings_lbl.config(text=list_strings)
-    input_string.delete("1.0","end")
+    input_string.delete(0, "end")
     input_string.config(wrap=None)
 
 
-    
+def show_my_list():
+    if not list_strings:
+        pyautogui.alert('Empty!')
+    else:
+        string = ''
+        for item in list_strings:
+            string += item
+            string += '\n'
+        pyautogui.alert(string)
+        
 
 running = True
 
 def start():
-    frame.destroy()
+    root.destroy()
     pyautogui.alert('press CapsLock to use clipboard \npress Esc to terminate app')
     global list_strings
     global running
@@ -86,15 +93,13 @@ def start():
 
     listener.stop()
 
-# Button Creation
+
 
 
 j =0
 
 
 def on_release(key):
-    
-    
     global running
     global list_strings
     global j
@@ -114,34 +119,29 @@ def on_release(key):
                 print(list_strings[j],"copied")
                   
             
-            
-                
-
-# Label Creation
-list_of_strings_lbl = tk.Label(frame, text="")
-list_of_strings_lbl.pack(padx=20, pady=10)
-
 
 add_strings_label = tk.Label( frame, text="add strings here:")
-add_strings_label.pack(padx=20, pady=10)
+add_strings_label.pack(padx=20, pady=5)
 
 
-
-input_string = tk.Text(frame, height=1, width=80,wrap=None)
+input_string = ttk.Entry(frame)
 input_string.bind('<Return>', lambda x: add_string())
-# 
-chxscrollbar=Scrollbar(input_string, orient=HORIZONTAL, command=input_string.xview)
-input_string["xscrollcommand"]=chxscrollbar.set
+# input_string.bind('<Return>',  (lambda event: add_string()))
+input_string.pack(fill='x',padx=20, pady=10)
+input_string.focus()
 
-# 
 
-input_string.pack(padx=20, pady=10)
-
-add_button = tk.Button(frame, text="add",command=add_string  )
+add_button = ttk.Button(frame, text="add",command=add_string)
 add_button.pack(padx=10, pady=5)
 
 
-start_button = tk.Button(frame, text="Start", command=start)
-start_button.pack(padx=10, pady=5)
+# start_button = ttk.Button(frame, text="Start", command=start)
+# start_button.pack(padx=10, pady=5)
+
+mainmenu = Menu(frame)
+mainmenu.add_command(label = "Start", command= start)
+mainmenu.add_command(label = "Show My List", command= show_my_list)
+root.config(menu = mainmenu)
+
 
 frame.mainloop()
