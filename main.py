@@ -138,9 +138,11 @@ add_button.pack(padx=10, pady=5)
 
 
 def quit_window(icon, item):
+    global running
+    running = False
+    os._exit(1)
     icon.stop()
     root.destroy()
-    os._exit(1)
 
 def hide_window():
    root.withdraw()
